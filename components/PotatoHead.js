@@ -8,7 +8,6 @@ const { cond, eq, add, set, Value, event } = Animated;
 const { width, height } = Dimensions.get("window");
 
 export class PotatoHead extends React.Component {
-  render() {
     dragX = new Value(0);
     dragY = new Value(0);
     offsetX = new Value(width / 2);
@@ -24,25 +23,23 @@ export class PotatoHead extends React.Component {
         },
       },
     ]);
-    // there is a bug here: undefined is not an object
 
-    /* transX = cond(
-     *   eq(this.gestureState, State.ACTIVE),
-     *   add(this.offsetX, this.dragX),
-     *   set(this.offsetX, add(this.offsetX, this.dragX)),
-     * );
-     * transY = cond(
-     *   eq(this.gestureState, State.ACTIVE),
-     *   add(this.offsetY, this.dragY),
-     *   set(this.offsetY, add(this.offsetY, this.dragY)),
-     * );
-     */
+    transX = cond(
+      eq(this.gestureState, State.ACTIVE),
 
-    /* { transform: [
-     *     { translateX: this.transX },
-     *     { translateY: this.transY },
-     * ] }
-     */
+      add(this.offsetX, this.dragX),
+      set(this.offsetX, add(this.offsetX, this.dragX)),
+    );
+    transY = cond(
+      eq(this.gestureState, State.ACTIVE),
+
+      add(this.offsetY, this.dragY),
+      set(this.offsetY, add(this.offsetY, this.dragY)),
+    );
+
+
+  render() {
+
     return (
       <View style={styles.container}>
         <PanGestureHandler
@@ -53,6 +50,12 @@ export class PotatoHead extends React.Component {
           <Animated.View
             style={[
               styles.box,
+              {
+                transform: [
+                  {translateX: this.transX},
+                  {translateY: this.transY},
+                ],
+              },
             ]}
           />
         </PanGestureHandler>
@@ -76,5 +79,15 @@ const styles = StyleSheet.create({
     borderRadius: CIRCLE_SIZE / 2,
     borderColor: "#000"
   },
+  car: {
+    backgroundColor: "blue",
+    marginLeft: -(CIRCLE_SIZE / 2),
+    marginTop: -(CIRCLE_SIZE / 2),
+    width: CIRCLE_SIZE,
+    height: CIRCLE_SIZE,
+    borderRadius: CIRCLE_SIZE / 2,
+    borderColor: "#000"
+  },
+
 });
 
