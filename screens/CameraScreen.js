@@ -9,7 +9,7 @@ import {
   Button,
   View,
 } from 'react-native';
-import { WebBrowser, Camera } from 'expo';
+import { WebBrowser, Camera, Permissions } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
@@ -18,14 +18,33 @@ export default class CameraScreen extends React.Component {
     header: null,
   };
 
-  _takePicture = () => camera.captureImage
+  state = {
+    hasPermission: null,
+  }
+
+  async componentDidMount() {
+    const { status  } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasPermission: status === 'granted' })
+  }
+
+  _takePicture = async () => {
+    await this.camera.takePictureAsync()
+    console.log('new potato!');
+  }
+
   render() {
-    return (
+    if (this.state.hasPermission === null) {
+      return <Text>Waiting for Permission</Text>
+    } else if (this.state.hasPermission === false) {
+      return <Text>No Permission</Text>
+    } else {
+      return (
       <View style={styles.main}>
-        <Camera style={styles.camera}/>
+        <Camera style={styles.camera} ref={ref => {this.camera = ref}}/>
         <Button title="potato!" onPress={this._takePicture}/>
       </View>
     );
+     }
   }
 }
 
