@@ -38,7 +38,6 @@ export default class DraggableElement extends React.Component {
 
 
   render() {
-
     return (
       <View style={styles.container}>
         <PanGestureHandler
@@ -56,6 +55,7 @@ export default class DraggableElement extends React.Component {
                 ],
               },
             ]}
+            children={this.props.children}
           />
         </PanGestureHandler>
       </View>

@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import DraggableElement from './DraggableElement'
-
-const { width, height } = Dimensions.get("window");
+import { Hat } from "./Decorations";
 
 export class PotatoHead extends React.Component {
   state = {
@@ -14,13 +13,15 @@ export class PotatoHead extends React.Component {
     if (image) {
     return (
       <View style={styles.container} onLayout={(event) => {
-        const {width, height} = event.nativeEvent.layout;
+        const { width, height } = event.nativeEvent.layout;
         this.setState({width, height});
       }}>
         { this.state.width ? (
           <>
           <Image style={[StyleSheet.absoluteFill, {height, width, resizeMode: 'cover'}]} source={image} />
-          <DraggableElement style={styles.car} pos={{x: width / 3, y: height / 3}}/>
+          <DraggableElement  pos={{x: width / 3, y: height / 3}}>
+            <Hat/>
+          </DraggableElement>
           <DraggableElement style={styles.box} pos={{x: 2 * width / 3, y: height / 2}}/>
           </>
         ) : null
