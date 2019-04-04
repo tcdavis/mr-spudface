@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import DraggableElement from './DraggableElement'
 import { Hat } from "./Decorations";
 
+const {width, height} = Dimensions.get("window")
+
 export class PotatoHead extends React.Component {
   state = {
     width: 0,
@@ -11,6 +13,9 @@ export class PotatoHead extends React.Component {
   render() {
     const image = this.props.navigation.getParam('image');
     if (image) {
+      // const {width, height } = this.state;
+      console.log(width)
+      console.log(height)
     return (
       <View style={styles.container} onLayout={(event) => {
         const { width, height } = event.nativeEvent.layout;
@@ -40,6 +45,8 @@ const CIRCLE_SIZE = 70;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
+    height: "100%"
   },
   box: {
     backgroundColor: "tomato",

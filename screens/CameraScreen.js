@@ -41,7 +41,11 @@ export default class CameraScreen extends React.Component {
     } else {
       return (
       <View style={styles.main}>
-        <Camera style={styles.camera} ref={ref => {this.camera = ref}}/>
+        <Camera
+          style={styles.camera}
+          ref={ref => {this.camera = ref}}
+          type={Camera.Constants.Type.front}
+        />
         <Button title="potato!" onPress={this._takePicture}/>
       </View>
     );
