@@ -13,7 +13,7 @@ export default class LinksScreen extends React.Component {
     const dummyText = (
       <MonoText >Hello </MonoText>
     );
-    const potato = (<PotatoHead/>);
+    const potato = (<PotatoHead navigation={this.props.navigation} />);
 
     return (
       <ScrollView style={styles.container}>

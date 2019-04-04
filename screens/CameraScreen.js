@@ -28,8 +28,9 @@ export default class CameraScreen extends React.Component {
   }
 
   _takePicture = async () => {
-    await this.camera.takePictureAsync()
+    const image = await this.camera.takePictureAsync()
     console.log('new potato!');
+    this.props.navigation.navigate('Links', {image})
   }
 
   render() {

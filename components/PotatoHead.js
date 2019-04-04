@@ -1,17 +1,36 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
 import DraggableElement from './DraggableElement'
 
 const { width, height } = Dimensions.get("window");
 
 export class PotatoHead extends React.Component {
+  state = {
+    width: 0,
+    height: 0
+  }
   render() {
+    const image = this.props.navigation.getParam('image');
+    if (image) {
     return (
-      <View style={styles.container}>
-        <DraggableElement style={styles.car} pos={{x: width / 3, y: height / 3}}/>
-        <DraggableElement style={styles.box} pos={{x: 2 * width / 3, y: 2 * height / 3}}/>
+      <View style={styles.container} onLayout={(event) => {
+        const {width, height} = event.nativeEvent.layout;
+        this.setState({width, height});
+      }}>
+        { this.state.width ? (
+          <>
+          <Image style={[StyleSheet.absoluteFill, {height, width, resizeMode: 'cover'}]} source={image} />
+          <DraggableElement style={styles.car} pos={{x: width / 3, y: height / 3}}/>
+          <DraggableElement style={styles.box} pos={{x: 2 * width / 3, y: height / 2}}/>
+          </>
+        ) : null
+         }
       </View>
     );
+
+    } else {
+      return <Text>Where's my face?</Text>
+    }
   }
 }
 
